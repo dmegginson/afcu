@@ -17,6 +17,8 @@ namespace AFCU.Models
 
         public string FullName { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime? LastLoggedIn { get; set; }
 

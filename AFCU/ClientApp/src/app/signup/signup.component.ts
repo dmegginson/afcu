@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NewUser, User } from '../models';
+import { User } from '../models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationService, UserService } from '../services';
 
@@ -10,11 +10,12 @@ import { ConfigurationService, UserService } from '../services';
 })
 export class SignupComponent implements OnInit {
 
-  private user: NewUser = new NewUser();
+  private user: User = new User();
 
   private existingUsername: boolean = false;
   private usernameValid: boolean = true;
   private passwordValid: boolean = true;
+  private phoneNumberValid: boolean = true;
 
   constructor(private configurationService: ConfigurationService,
     private userService: UserService,
@@ -26,11 +27,15 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
+    console.log(`${this.usernameValid}, ${this.passwordValid}, ${this.phoneNumberValid}`);
+
     this.validate();
 
-    if (this.usernameValid === true && this.existingUsername === false && this.passwordValid === true) {
+    console.log(`${this.usernameValid}, ${this.passwordValid}, ${this.phoneNumberValid}`);
+
+    if (this.usernameValid === true && this.existingUsername === false && this.passwordValid === true && this.phoneNumberValid === true) {
       this.userService.saveUser(this.user as User).subscribe(data => {
-        this.user = new NewUser(data);
+        this.user = new User(data);
 
         this.router.navigateByUrl(`/landing/${this.user.id}`);
       });
@@ -46,6 +51,7 @@ export class SignupComponent implements OnInit {
   validate(): void {
     this.checkUsername();
     this.checkEmptyPassword();
+    this.checkPhoneNumber();
   }
 
   checkUsername(): void {
@@ -65,7 +71,7 @@ export class SignupComponent implements OnInit {
   checkExistingUsername(): void {
     if (this.usernameValid) {
       this.userService.getUserByUsername(this.user.username).subscribe(data => {
-        const existingUser = new NewUser(data);
+        const existingUser = new User(data);
 
         if (existingUser.username != null) {
           this.existingUsername = true;
@@ -84,6 +90,29 @@ export class SignupComponent implements OnInit {
     }
     else {
       this.passwordValid = true;
+    }
+  }
+
+  checkPhoneNumber(): void {
+    this.checkEmptyPhoneNumber();
+    this.checkPhoneNumberFormat();
+  }
+
+  checkEmptyPhoneNumber(): void {
+    if (!this.user.phoneNumber && this.phoneNumberValid) {
+      this.phoneNumberValid = false;
+    }
+    else {
+      this.phoneNumberValid = true;
+    }
+  }
+
+  checkPhoneNumberFormat(): void {
+    if (this.phoneNumberValid && this.user.phoneNumber.match(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)) {
+      this.phoneNumberValid = true;
+    }
+    else {
+      this.phoneNumberValid = false;
     }
   }
 }

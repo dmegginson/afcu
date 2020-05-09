@@ -44,6 +44,18 @@
 
     <div class="row mt-2">
         <div class="col-12">
+            <input [(ngModel)]="user.phoneNumber" placeholder="Phone Number*" (blur)="checkPhoneNumber()" (keyup.enter)="signup()" />
+        </div>
+    </div>
+
+    <div class="row" *ngIf="phoneNumberValid === false">
+        <div class="col-12">
+            <span class="text-danger font-weight-light"><i>Phone number cannot be empty. Please use 555-555-5555 format.</i></span>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
             <input [(ngModel)]="user.fullName" placeholder="Name" (keyup.enter)="signup()" />
         </div>
     </div>
