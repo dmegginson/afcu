@@ -1,0 +1,36 @@
+<div class="">
+
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-secondary">Welcome to my coding exercise</h1>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-12">
+            <span *ngIf="user.fullName !== null">Hello {{user.fullName}},</span>
+            <span *ngIf="user.fullName === null">Hello,</span>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <span>You are now logged in. Not a lot to do yet.</span>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <span *ngIf="user.lastLoggedIn !== null">You were last logged in on {{user.lastLoggedIn | date:'full'}}.</span>
+            <span *ngIf="user.lastLoggedIn === null">This is your first time logged in.</span>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <span class="btn btn-dark">
+                <a (click)="logout()">Logout</a>
+            </span>
+        </div>
+    </div>
+</div>

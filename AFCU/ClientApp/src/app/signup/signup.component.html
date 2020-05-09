@@ -1,0 +1,59 @@
+<div class="">
+
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-secondary">Create account</h1>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <span class="font-weight-light">Items marked with asterisk (*) are required.</span>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <input [(ngModel)]="user.username" placeholder="Choose a username*" (blur)="checkUsername()" (keyup.enter)="signup()" />
+        </div>
+    </div>
+
+    <div class="row" *ngIf="usernameValid === false">
+        <div class="col-12">
+            <span class="text-danger font-weight-light"><i>Username cannot be empty.</i></span>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="existingUsername === true">
+        <div class="col-12">
+            <span class="text-danger font-weight-light"><i>Username is already in use. Please select another username.</i></span>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <input [(ngModel)]="user.password" placeholder="Choose a password*" (blur)="checkEmptyPassword()" (keyup.enter)="signup()" />
+        </div>
+    </div>
+
+    <div class="row" *ngIf="passwordValid === false">
+        <div class="col-12">
+            <span class="text-danger font-weight-light"><i>Password cannot be empty.</i></span>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <input [(ngModel)]="user.fullName" placeholder="Name" (keyup.enter)="signup()" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <span class="btn btn-dark">
+                <a (click)="signup()">Create Account</a>
+            </span>
+        </div>
+    </div>
+</div>
+
